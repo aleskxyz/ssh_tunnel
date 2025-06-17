@@ -158,6 +158,8 @@ configure_remote_server() {
     env_vars+="SSHD_CONFIG_DIR='$SSHD_CONFIG_DIR' "
     env_vars+="SSH_CONFIG='$SSH_CONFIG' "
     env_vars+="TARGET_IP='$LOCAL_TUN_IP' "
+    env_vars+="SERVICE_PORT='$SERVICE_PORT' "
+    env_vars+="SERVICE_PROTOCOL='$SERVICE_PROTOCOL' "
 
     # Execute the command with environment variables
     ssh_cmd+=("$env_vars bash -s")
@@ -242,25 +244,6 @@ setup_ssh_tunnel() {
     sudo systemctl enable --now "$HEALTHCHECK_TIMER_NAME"
 
     print_status "success" "SSH tunnel setup completed successfully"
-}
-
-forward_port() {
-    print_section "Setting up port forwarding on remote server"
-
-    local ssh_cmd=(ssh)
-    if [ -n "$SSH_KEY" ]; then
-        ssh_cmd+=(-i "$SSH_KEY")
-    fi
-    ssh_cmd+=(-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p "$REMOTE_PORT" "${REMOTE_USER}@${REMOTE_HOST}")
-
-    # Enable and start the forwarder service
-    "${ssh_cmd[@]}" "systemctl enable --now ssh-tunnel-${SERVICE_PROTOCOL}-forwarder@${SERVICE_PORT}"
-
-    if [ $? -eq 0 ]; then
-        print_status "success" "Port forwarding setup completed successfully"
-    else
-        handle_error "Failed to setup port forwarding"
-    fi
 }
 
 # Function to install config_interfaces.sh
@@ -373,9 +356,6 @@ configure_remote_server
 
 # Setup tunnel
 setup_ssh_tunnel
-
-# Setup port forwarding
-forward_port
 
 print_section "Setup Summary"
 print_status "success" "Setup completed successfully"

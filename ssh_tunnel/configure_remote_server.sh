@@ -8,6 +8,8 @@ PUBLIC_KEY="${PUBLIC_KEY}"
 SSHD_CONFIG_DIR="${SSHD_CONFIG_DIR}"
 SSH_CONFIG="${SSH_CONFIG}"
 TARGET_IP="${TARGET_IP}"
+SERVICE_PORT="${SERVICE_PORT}"
+SERVICE_PROTOCOL="${SERVICE_PROTOCOL}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -177,3 +179,14 @@ if [ ! -f "$UDP_SERVICE" ] || ! diff -q "$UDP_SERVICE" <(echo "$UDP_SERVICE_CONT
 fi
 
 print_status "success" "Remote server configuration completed successfully"
+
+# Activate the forwarder service
+print_status "info" "Activating ${SERVICE_PROTOCOL} forwarder service for port ${SERVICE_PORT}"
+sudo systemctl enable --now "ssh-tunnel-${SERVICE_PROTOCOL}-forwarder@${SERVICE_PORT}"
+
+if [ $? -eq 0 ]; then
+    print_status "success" "Port forwarding service activated successfully"
+else
+    print_status "error" "Failed to activate port forwarding service"
+    exit 1
+fi
