@@ -47,19 +47,18 @@ print_section() {
 # Function to show help
 show_help() {
     cat << EOF
-${BOLD}SSH Tunnel Setup Script${NC}
+SSH Tunnel Setup Script
 
-${DIM}Usage:${NC} $0 USER@HOST[:PORT] -s SERVICE_PORT[/PROTOCOL] [-i SSH_KEY]
+Usage: $0 USER@HOST[:PORT] -s SERVICE_PORT[/PROTOCOL] [-i SSH_KEY]
 
-${BOLD}Arguments:${NC}
-  ${GREEN}USER@HOST[:PORT]${NC}    Connection string (e.g., root@192.168.1.100:22)
-  ${GREEN}-s SERVICE_PORT[/PROTOCOL]${NC}  Port of the service to forward  (e.g., 443/tcp)
-  ${GREEN}-i SSH_KEY${NC}         Path to SSH key for authentication (optional)
-  ${GREEN}-h, --help${NC}         Show this help message
+Arguments:
+  USER@HOST[:PORT]    Connection string (e.g., root@192.168.1.100:22)
+  -s SERVICE_PORT[/PROTOCOL]  Port of the service to forward (e.g., 443/tcp)
+  -i SSH_KEY         Path to SSH key for authentication (optional)
+  -h, --help         Show this help message
 
-${BOLD}Example:${NC}
+Example:
   $0 root@192.168.1.100:22 -s 443/tcp -i ~/.ssh/id_rsa
-
 EOF
     exit 0
 }
