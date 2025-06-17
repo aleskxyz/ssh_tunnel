@@ -183,6 +183,14 @@ setup_ssh_tunnel() {
     local temp_healthcheck=$(mktemp)
     local temp_timer=$(mktemp)
 
+    # Export variables for envsubst
+    export REMOTE_HOST
+    export LOCAL_TUN_IP
+    export REMOTE_TUN_IP
+    export NETMASK
+    export SSH_KEY="$KEY_PATH"
+    export SSH_PORT="$REMOTE_PORT"
+
     # Process templates into temporary files
     envsubst < "$script_dir/ssh-tunnel.service" > "$temp_tunnel"
     envsubst < "$script_dir/ssh-tunnel-healthcheck.service" > "$temp_healthcheck"
