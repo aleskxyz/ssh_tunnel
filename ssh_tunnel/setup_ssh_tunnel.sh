@@ -52,10 +52,10 @@ SSH Tunnel Setup Script
 Usage: setup.sh USER@HOST[:PORT] -s SERVICE_PORT[/PROTOCOL] [-i SSH_KEY]
 
 Arguments:
-  USER@HOST[:PORT]    Connection string (e.g., root@192.168.1.100:22)
+  USER@HOST[:PORT]            Connection string (e.g., root@192.168.1.100:22)
   -s SERVICE_PORT[/PROTOCOL]  Port of the service to forward (e.g., 443/tcp)
-  -i SSH_KEY         Path to SSH key for authentication (optional)
-  -h, --help         Show this help message
+  -i SSH_KEY                  Path to SSH key for authentication (optional)
+  -h, --help                  Show this help message
 
 Example:
   setup.sh root@192.168.1.100:22 -s 443/tcp -i ~/.ssh/id_rsa
