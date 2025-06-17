@@ -160,7 +160,7 @@ configure_remote_server() {
 
     # Execute the command with environment variables
     ssh_cmd+=("$env_vars bash -s")
-    cat configure_remote_server.sh | "${ssh_cmd[@]}"
+    cat "$(dirname "$0")/configure_remote_server.sh" | "${ssh_cmd[@]}"
 
     if [ $? -eq 0 ]; then
         print_status "success" "Remote server configured successfully"
