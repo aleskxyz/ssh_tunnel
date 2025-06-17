@@ -136,6 +136,9 @@ ExecStart=/usr/bin/socat TCP-LISTEN:%i,reuseaddr,fork TCP:${TARGET_IP}:%i
 Restart=always
 RestartSec=10
 
+# Resource limits
+LimitNOFILE=65535
+
 [Install]
 WantedBy=multi-user.target"
 
@@ -164,6 +167,9 @@ ExecStart=/usr/bin/socat UDP4-RECVFROM:%i,reuseaddr,fork UDP4-SENDTO:${TARGET_IP
 # Restart configuration
 Restart=always
 RestartSec=10
+
+# Resource limits
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target"

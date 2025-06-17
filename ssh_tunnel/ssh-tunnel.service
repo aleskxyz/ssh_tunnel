@@ -23,5 +23,8 @@ ExecStartPost=/usr/local/bin/config_interfaces.sh
 Restart=always
 RestartSec=10
 
+# Resource limits
+LimitNOFILE=65535
+
 [Install]
 WantedBy=multi-user.target 
