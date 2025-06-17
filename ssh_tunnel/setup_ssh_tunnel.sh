@@ -49,7 +49,7 @@ show_help() {
     cat << EOF
 SSH Tunnel Setup Script
 
-Usage: $0 USER@HOST[:PORT] -s SERVICE_PORT[/PROTOCOL] [-i SSH_KEY]
+Usage: setup.sh USER@HOST[:PORT] -s SERVICE_PORT[/PROTOCOL] [-i SSH_KEY]
 
 Arguments:
   USER@HOST[:PORT]    Connection string (e.g., root@192.168.1.100:22)
@@ -58,7 +58,7 @@ Arguments:
   -h, --help         Show this help message
 
 Example:
-  $0 root@192.168.1.100:22 -s 443/tcp -i ~/.ssh/id_rsa
+  setup.sh root@192.168.1.100:22 -s 443/tcp -i ~/.ssh/id_rsa
 EOF
     exit 0
 }
