@@ -174,15 +174,18 @@ configure_remote_server() {
 setup_ssh_tunnel() {
     print_section "Setting up SSH tunnel"
 
+    # Get the directory containing the script
+    local script_dir="$(dirname "$0")"
+
     # Generate temporary files with envsubst
     local temp_tunnel=$(mktemp)
     local temp_healthcheck=$(mktemp)
     local temp_timer=$(mktemp)
 
     # Process templates into temporary files
-    envsubst < "ssh-tunnel.service" > "$temp_tunnel"
-    envsubst < "ssh-tunnel-healthcheck.service" > "$temp_healthcheck"
-    envsubst < "ssh-tunnel-healthcheck.timer" > "$temp_timer"
+    envsubst < "$script_dir/ssh-tunnel.service" > "$temp_tunnel"
+    envsubst < "$script_dir/ssh-tunnel-healthcheck.service" > "$temp_healthcheck"
+    envsubst < "$script_dir/ssh-tunnel-healthcheck.timer" > "$temp_timer"
 
     # Function to check if files need updating
     needs_update() {
