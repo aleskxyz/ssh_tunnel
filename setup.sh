@@ -2,6 +2,7 @@
 
 # Exit on any error
 set -e
+set -x
 
 # Create temporary installation directory
 TEMP_DIR=$(mktemp -d)

@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 set -u
+set -x
 
 # Colors and formatting
 RED='\033[0;31m'
