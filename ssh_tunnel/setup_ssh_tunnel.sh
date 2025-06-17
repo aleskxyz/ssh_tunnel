@@ -154,10 +154,10 @@ configure_remote_server() {
     ssh_cmd+=(-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p "$REMOTE_PORT" "${REMOTE_USER}@${REMOTE_HOST}")
 
     # Build environment variables string
-    local env_vars="PUBLIC_KEY=$PUBLIC_KEY "
-    env_vars+="SSHD_CONFIG_DIR=$SSHD_CONFIG_DIR "
-    env_vars+="SSH_CONFIG=$SSH_CONFIG "
-    env_vars+="TARGET_IP=$LOCAL_TUN_IP "
+    local env_vars="PUBLIC_KEY='$PUBLIC_KEY' "
+    env_vars+="SSHD_CONFIG_DIR='$SSHD_CONFIG_DIR' "
+    env_vars+="SSH_CONFIG='$SSH_CONFIG' "
+    env_vars+="TARGET_IP='$LOCAL_TUN_IP' "
 
     # Execute the command with environment variables
     ssh_cmd+=("$env_vars bash -s")
