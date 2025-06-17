@@ -1,0 +1,21 @@
+[Unit]
+Description=SSH Tunnel Health Check Service
+After=ssh-tunnel.service
+Requires=ssh-tunnel.service
+
+[Service]
+Type=oneshot
+
+# Health check command
+ExecStart=/bin/bash -c '\
+    success_count=$(ping -c 3 -W 5 ${REMOTE_TUN_IP} 2>/dev/null | grep -c "bytes from"); \
+    if [ "$success_count" -lt 1 ]; then \
+        echo "Health check failed: Only $success_count/3 pings successful to ${REMOTE_TUN_IP}"; \
+        systemctl restart ssh-tunnel.service; \
+        exit 1; \
+    fi; \
+    echo "Health check passed: $success_count/3 pings successful to ${REMOTE_TUN_IP}"; \
+    exit 0'
+
+[Install]
+WantedBy=multi-user.target 

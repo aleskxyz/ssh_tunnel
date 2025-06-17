@@ -1,0 +1,12 @@
+[Unit]
+Description=SSH Tunnel Health Check Timer
+After=ssh-tunnel.service
+
+[Timer]
+OnUnitActiveSec=60s
+OnBootSec=30s
+OnStartupSec=30s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target 
