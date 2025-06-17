@@ -232,6 +232,8 @@ setup_ssh_tunnel() {
     if [ "$needs_restart" = true ]; then
         print_status "info" "Reloading systemd"
         sudo systemctl daemon-reload
+        sudo systemctl enable --now "$SERVICE_NAME"
+        sudo systemctl enable --now "$HEALTHCHECK_TIMER_NAME"
         sudo systemctl restart "$SERVICE_NAME"
         sudo systemctl restart "$HEALTHCHECK_TIMER_NAME"
     else
