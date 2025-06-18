@@ -194,7 +194,7 @@ setup_ssh_tunnel() {
 
     # Process templates into temporary files
     envsubst < "$script_dir/ssh-tunnel.service" > "$temp_tunnel"
-    envsubst < "$script_dir/ssh-tunnel-healthcheck.service" > "$temp_healthcheck"
+    envsubst '${REMOTE_TUN_IP}' < "$script_dir/ssh-tunnel-healthcheck.service" > "$temp_healthcheck"
     envsubst < "$script_dir/ssh-tunnel-healthcheck.timer" > "$temp_timer"
 
     # Function to check if files need updating
