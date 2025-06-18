@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-set -x
+
 # Configuration from environment variables with fallback values
 REMOTE_USER="root"
 REMOTE_HOST="${REMOTE_HOST}"

@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 set -u
-set -x
 
 # Configuration from environment variables
 PUBLIC_KEY="${PUBLIC_KEY}"

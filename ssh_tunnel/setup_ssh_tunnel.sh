@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 set -u
-set -x
 
 # Colors and formatting
 RED='\033[0;31m'
@@ -13,7 +12,7 @@ BOLD='\033[1m'
 DIM='\033[2m'
 
 # Constants
-KEY_PATH="/etc/ssh/ssh_tunnel"
+KEY_PATH="/root/.ssh/ssh_tunnel"
 SSHD_CONFIG_DIR="/etc/ssh/sshd_config.d"
 SSH_CONFIG="${SSHD_CONFIG_DIR}/zzz_ssh_tunnel.conf"
 SERVICE_NAME="ssh-tunnel"
@@ -130,6 +129,8 @@ generate_ssh_key() {
     fi
     
     print_status "info" "Generating new SSH keypair"
+    sudo mkdir -p $(dirname "$KEY_PATH")
+    sudo chmod 700 $(dirname "$KEY_PATH")
     sudo ssh-keygen -t ed25519 -f "$KEY_PATH" -N "" -C "" -q
     
     if [ $? -eq 0 ]; then
