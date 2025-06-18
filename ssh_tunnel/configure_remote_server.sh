@@ -61,6 +61,7 @@ install_package() {
 
 # Install required packages
 install_package "lsof"
+install_package "socat"
 
 # Install glider
 if ! command -v glider >/dev/null 2>&1; then
@@ -152,7 +153,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 
-ExecStart=/usr/local/bin/glider -listen tcp://:%i -forward tcp://${TARGET_IP}:%i
+ExecStart=/usr/bin/socat TCP-LISTEN:%i,reuseaddr,fork TCP:${TARGET_IP}:%i
 
 # Restart configuration
 Restart=always
