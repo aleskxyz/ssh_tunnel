@@ -60,8 +60,30 @@ install_package() {
 }
 
 # Install required packages
-install_package "socat"
 install_package "lsof"
+
+# Install glider
+if ! command -v glider >/dev/null 2>&1; then
+    print_status "info" "Installing glider"
+    version="0.16.4"
+    arch=$(uname -m)
+    if [ "$arch" = "x86_64" ]; then
+        arch="amd64"
+    elif [ "$arch" = "aarch64" ]; then
+        arch="arm64"
+    else
+        print_status "error" "Unsupported architecture: $arch"
+        exit 1
+    fi
+    curl -sL https://github.com/nadoo/glider/releases/download/v${version}/glider_${version}_linux_${arch}.tar.gz -o /tmp/glider.tar.gz
+    tar -xzf /tmp/glider.tar.gz -C /tmp
+    sudo mv /tmp/glider_${version}_linux_${arch}/glider /usr/local/bin/glider
+    sudo chmod +x /usr/local/bin/glider
+    print_status "success" "Glider installed successfully"
+    rm -rf /tmp/glider.tar.gz /tmp/glider_${version}_linux_${arch}
+else
+    print_status "info" "Glider already installed"
+fi
 
 # Create config directory if it doesn't exist
 sudo mkdir -p "$SSHD_CONFIG_DIR"
@@ -130,7 +152,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 
-ExecStart=/usr/bin/socat TCP-LISTEN:%i,reuseaddr,fork TCP:${TARGET_IP}:%i
+ExecStart=/usr/local/bin/glider -listen tcp://:%i -forward tcp://${TARGET_IP}:%i
 
 # Restart configuration
 Restart=always
@@ -162,7 +184,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 
-ExecStart=/usr/bin/socat UDP4-RECVFROM:%i,reuseaddr,fork UDP4-SENDTO:${TARGET_IP}:%i
+ExecStart=/usr/local/bin/glider -listen udp://:%i -forward udp://${TARGET_IP}:%i
 
 # Restart configuration
 Restart=always
