@@ -33,7 +33,7 @@ log_step() {
 # Function to construct SSH command
 run_ssh() {
     local cmd="$1"
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "$SSH_KEY" "${REMOTE_USER}@${REMOTE_HOST}" "$cmd"
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "$SSH_KEY" "${REMOTE_USER}@${REMOTE_HOST}" -p "$SSH_PORT" "$cmd"
 }
 
 # Wait and get PID of the ssh tunnel from systemd
